@@ -1,0 +1,12 @@
+2022-08-30 17:32:17.605 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:32:51.039 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:33:39.578 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:33:58.574 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:35:22.187 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:36:04.931 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:38:19.877 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:38:50.471 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:39:51.099 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:47:45.009 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 17:55:31.972 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-30 18:12:39.881 | INFO     | tgbot.utils.on_events:on_startup:15 - Бот запущен. Username: @kozan_ostra_garant_bot

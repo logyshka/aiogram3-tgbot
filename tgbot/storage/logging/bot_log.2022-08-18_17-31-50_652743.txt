@@ -1,0 +1,2 @@
+2022-08-18 17:31:51.007 | INFO     | tgbot.utils.on_events:on_startup:14 - Бот запущен. Username: @kozan_ostra_garant_bot
+2022-08-18 17:33:22.108 | INFO     | tgbot.utils.on_events:on_startup:14 - Бот запущен. Username: @kozan_ostra_garant_bot
