@@ -170,7 +170,7 @@ def admins(admin_list: list[tuple[int, str]]):
             InlineKeyboardButton(text='🗑', callback_data=f'delete_admin_{i[0]}')
         ] for i in admin_list],
         [
-            InlineKeyboardButton(text='➕', callback_data='add_admin')
+            InlineKeyboardButton(text='➕ Добавить админа', callback_data='add_admin')
         ],
         [
             InlineKeyboardButton(text='✖ Закрыть', callback_data='close')
