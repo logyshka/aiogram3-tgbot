@@ -15,6 +15,7 @@ from tgbot.utils.admin_functions import mail, plan_mail, get_planned_mails
 router = admin_router
 
 
+# Open mailing menu
 @router.callback_query(Text(text='mailing_center'), state='*')
 async def open_mailing_center(call: types.CallbackQuery):
     text = '<b>📫 Меню для управления рассылками</b>'
@@ -22,6 +23,7 @@ async def open_mailing_center(call: types.CallbackQuery):
     await call.message.answer(text=text, reply_markup=admin_menu.mailing_center(planned_count))
 
 
+# Start mailing process
 @router.callback_query(Text(text='get_message_for_mail'), state='*')
 async def get_message_for_mail(call: types.CallbackQuery, state: FSMContext):
     text = '<b>⤴ Ответьте на сообщение, которое будет использоваться в рассылке, любым текстом</b>'
@@ -29,6 +31,7 @@ async def get_message_for_mail(call: types.CallbackQuery, state: FSMContext):
     await state.set_state(states.Admin.mailing)
 
 
+# Get message for mailing
 @router.message(state=states.Admin.mailing)
 async def get_msg_for_mailing(msg: types.Message, state: FSMContext):
     if msg.reply_to_message is None:
@@ -43,6 +46,7 @@ async def get_msg_for_mailing(msg: types.Message, state: FSMContext):
     await msg.answer(text=text, reply_markup=markup)
 
 
+# Ask for adding button to mailing message
 @router.callback_query(Text(text_startswith='need_button_'), state=states.Admin.mailing)
 async def get_message_for_mail(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
@@ -52,6 +56,7 @@ async def get_message_for_mail(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer(text=text, reply_markup=markup)
 
 
+# Start mailing right now
 @router.callback_query(Text(text='start_mailing_now'), state=states.Admin.mailing)
 async def choose_type_of_mailing(call: types.CallbackQuery, state: FSMContext):
     await call.message.delete()
@@ -59,6 +64,7 @@ async def choose_type_of_mailing(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
 
 
+# Start choosing time for mailing
 async def planing_mail(msg: types.Message, state: FSMContext):
     dt = await DatetimeManager.get_datetime(text=msg.text, state=state)
     markup = admin_menu.close()
@@ -81,6 +87,7 @@ dt_manager = DatetimeManager(router, planing_mail)
 router.callback_query.register(dt_manager.show_calendar_callback, Text(text='start_mailing_later'), states.Admin.mailing)
 
 
+# Start adding of url button to message
 @router.callback_query(Text(text='add_url_button'))
 async def add_url_button(call: types.CallbackQuery, state: FSMContext):
     await state.set_state(states.Admin.buttoning)
@@ -88,6 +95,7 @@ async def add_url_button(call: types.CallbackQuery, state: FSMContext):
     await call.message.answer(text=text, reply_markup=admin_menu.cancel())
 
 
+# Get button data
 @router.message(state=states.Admin.buttoning)
 async def get_button_data(msg: types.Message, state: FSMContext):
     is_error = True
@@ -117,6 +125,7 @@ async def get_button_data(msg: types.Message, state: FSMContext):
     await msg.answer(text=text, reply_markup=markup)
 
 
+# Get row for adding of button
 @router.callback_query(Text(text=('last_row', 'new_row')), state=states.Admin.buttoning)
 async def choose_place(call: types.CallbackQuery, state: FSMContext):
     data = await state.get_data()
@@ -127,6 +136,7 @@ async def choose_place(call: types.CallbackQuery, state: FSMContext):
     await state.clear()
 
 
+# Get list of planned mailings
 @router.callback_query(Text(text='planned_mails'))
 async def show_planned_mails(call: types.CallbackQuery):
     mails = get_planned_mails()
@@ -140,6 +150,7 @@ async def show_planned_mails(call: types.CallbackQuery):
     await call.message.answer(text=text, reply_markup=markup)
 
 
+# Show planned mailing info
 @router.callback_query(Text(text_startswith='show_mail_'))
 async def show_mail(call: types.CallbackQuery):
     kwargs = scheduler.get_job(job_id=call.data.replace('show_mail_', '')).kwargs
@@ -154,6 +165,7 @@ async def show_mail(call: types.CallbackQuery):
     await bot.send_message(text=text, reply_markup=markup, reply_to_message_id=msg_id, chat_id=call.from_user.id)
 
 
+# Refresh list of planned mailings
 async def reload_planned_mails(call: types.CallbackQuery):
     mails = get_planned_mails()
     if len(mails) == 0:
@@ -169,6 +181,7 @@ async def reload_planned_mails(call: types.CallbackQuery):
         pass
 
 
+# Cancel planned mailing
 @router.callback_query(Text(text_startswith=('cancel_mail_', 'cancel_mail2_')))
 async def cancel_mail(call: types.CallbackQuery):
     job_id = call.data.replace('cancel_mail_', '')
@@ -186,6 +199,7 @@ async def cancel_mail(call: types.CallbackQuery):
         await call.message.delete()
 
 
+# Just a handler
 @router.callback_query(Text(text='reload_planned_mails'))
 async def reload_mails(call: types.CallbackQuery):
     await reload_planned_mails(call)

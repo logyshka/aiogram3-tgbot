@@ -5,7 +5,7 @@ from tgbot.utils.admin_functions import replan_rcopy_database
 from tgbot.loader import scheduler, config
 
 
-# Действия при запуске бота
+# Actions on bot startup
 async def on_startup(bot: Bot):
     if create_tables():
         logger.success('База данных успешно создана!')
@@ -17,8 +17,6 @@ async def on_startup(bot: Bot):
     replan_rcopy_database()
 
 
-# Действия при выключении бота
+# Actions on bot shutdown
 async def on_shutdown():
     ...
-
-

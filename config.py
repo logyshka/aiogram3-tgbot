@@ -4,6 +4,7 @@ from os.path import dirname, exists
 from pickle import loads, dumps
 
 
+# Basic config class
 @dataclass
 class Cfg:
 
@@ -14,26 +15,26 @@ class Cfg:
         self.__dict__[key] = value
 
 
-# Паузы между отправками резервных копий
+# Container of pauses beetween getting of reserve copies
 @dataclass
 class RcopyPauses(Cfg):
     database: int = 30
 
 
-# Разное
+# Miscellanea container
 @dataclass
 class Misc(Cfg):
     rcopy_pauses: RcopyPauses = RcopyPauses()
 
 
-# Конфигурация бота
+# Bot configuration container
 @dataclass
 class BotConfig(Cfg):
     token: str
     admins: list
 
 
-# Константы
+# Const variables container
 @dataclass
 class Consts(Cfg):
     working_dir: str = dirname(__file__)

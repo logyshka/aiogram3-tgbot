@@ -13,6 +13,7 @@ from tgbot.utils.admin_functions import send_file_to_users, get_rcopy_database, 
 router = admin_router
 
 
+# Open reserve copies menu
 @router.callback_query(Text(text='reserve_copies'))
 async def open_storage_center(call: types.CallbackQuery):
     text = '<b>🗃 Настройка резервного копирования</b>'
@@ -20,6 +21,7 @@ async def open_storage_center(call: types.CallbackQuery):
     await call.message.answer(text=text, reply_markup=markup)
 
 
+# Set pause beetween sendings of reserve copies
 @router.callback_query(Text(text_startswith='set_rcopy_pause_'))
 async def set_rcopy_pause(call: types.CallbackQuery):
     name, value = call.data.replace('set_rcopy_pause_', '').split('_')
@@ -38,11 +40,14 @@ async def set_rcopy_pause(call: types.CallbackQuery):
     await call.answer(text=text, show_alert=True)
 
 
+# Download reserve copy of choosen stuff
 @router.callback_query(Text(text_startswith='download_'))
 async def download(call: types.CallbackQuery):
-    await send_file_to_users(bot, [call.from_user.id], get_rcopy_database())
+    data = {'database': get_rcopy_database}[call.data.replace('download_', '')]()
+    await send_file_to_users(bot, [call.from_user.id], data)
 
 
+# Open admin menu
 @router.callback_query(Text(text='admins'))
 async def open_admins(call: types.CallbackQuery):
     text = '<b>👨‍❤️‍👨 Вот текущий админ состав</b>'
@@ -50,6 +55,7 @@ async def open_admins(call: types.CallbackQuery):
     await call.message.answer(text=text, reply_markup=admin_menu.admins(admins))
 
 
+# Start adding of new admin
 @router.callback_query(Text(text='add_admin'))
 async def add_admin(call: types.CallbackQuery, state: FSMContext):
     text = '<b>✏ Введите id нового админа!</b>'
@@ -58,6 +64,7 @@ async def add_admin(call: types.CallbackQuery, state: FSMContext):
     await state.set_state(states.Admin.adding_admin)
 
 
+# Get id of new admin and react on it
 @router.message(state=states.Admin.adding_admin)
 async def add_admin(msg: types.Message, state: FSMContext):
     await state.clear()
@@ -82,6 +89,7 @@ async def add_admin(msg: types.Message, state: FSMContext):
     await msg.answer(text=text, reply_markup=admin_menu.close())
 
 
+# Delete admin from admin list
 @router.callback_query(Text(text_startswith='delete_admin_'))
 async def delete_admin(call: types.CallbackQuery):
     admin_id = int(call.data.replace('delete_admin_', ''))

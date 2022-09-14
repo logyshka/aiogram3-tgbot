@@ -2,9 +2,9 @@ import typing
 from aiogram import BaseMiddleware
 from aiogram import types
 from tgbot.services.api_database import User
-from loguru import logger
 
 
+# Allow to send user model to handler
 class GetterMiddleware(BaseMiddleware):
 
     async def __call__(

@@ -3,6 +3,7 @@ from datetime import datetime
 from tgbot.services.api_database.manage import BaseModel
 
 
+# Default user model
 class User(BaseModel):
     id = IntegerField(unique=True)
     username = CharField(max_length=32)

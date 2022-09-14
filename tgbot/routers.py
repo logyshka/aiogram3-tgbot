@@ -10,6 +10,7 @@ admin_router.message.filter(is_admin)
 admin_router.callback_query.filter(is_admin)
 
 
-def set_routers() -> None:
+# Register all routers
+def register_routers() -> None:
     dp.include_router(user_router)
     dp.include_router(admin_router)

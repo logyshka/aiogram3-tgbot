@@ -8,6 +8,7 @@ from tgbot.services.api_database import User
 from tgbot.utils.misc_functions import sdelete
 
 
+# Conduct a mailing
 async def mail(mailer_id: int, state_data: dict):
     success, total = 0, 0
     s_time = datetime.datetime.now()
@@ -34,6 +35,7 @@ async def mail(mailer_id: int, state_data: dict):
     await bot.send_message(chat_id=mailer_id, text=text)
 
 
+# Plan mailing on the time
 def plan_mail(mailer_id: int, state_data: dict, dt: datetime.datetime):
     return scheduler.add_job(
         func=mail,
@@ -47,10 +49,12 @@ def plan_mail(mailer_id: int, state_data: dict, dt: datetime.datetime):
         ))
 
 
+# Return planned mailings
 def get_planned_mails() -> list[str, datetime.datetime]:
     return [(job.id, job.next_run_time) for job in scheduler.get_jobs(jobstore='default') if job.name == 'mail']
 
 
+# Return reserve copy of database
 def get_rcopy_database() -> types.FSInputFile:
     from shutil import copy
     dst = Consts.database_file + '.copy'
@@ -59,6 +63,7 @@ def get_rcopy_database() -> types.FSInputFile:
     return types.FSInputFile(dst, filename='rdatabase.db')
 
 
+# Send the file to list of users
 async def send_file_to_users(_bot: Bot, user_ids: list[int], file: types.InputFile):
     for user_id in user_ids:
         try:
@@ -67,6 +72,7 @@ async def send_file_to_users(_bot: Bot, user_ids: list[int], file: types.InputFi
             pass
 
 
+# Change pause beetween mailings
 def replan_rcopy_database():
     job_id = 'rcopy_database'
     if scheduler.get_job(job_id=job_id) is None:
@@ -82,6 +88,7 @@ def replan_rcopy_database():
         scheduler.reschedule_job(job_id=job_id, trigger='interval', minutes=config.misc.rcopy_pauses.database)
 
 
+# Return details about admins
 async def get_admins_details():
     admins = []
     for i in config.bot.admins:

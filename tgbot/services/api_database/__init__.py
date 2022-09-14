@@ -3,6 +3,7 @@ from tgbot.services.api_database.models import User
 from os.path import exists
 
 
+# Create all tables
 def create_tables(again: bool = False) -> bool:
     if exists(Consts.database_file):
         return again

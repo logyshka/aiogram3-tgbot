@@ -1,11 +1,9 @@
 import typing
-from enum import Enum
-
 from peewee import *
-from datetime import datetime
 from tgbot.services.api_database.manage import BaseModel
 
 
+# Model that helps to create couples of users
 class Couple(BaseModel):
     couple_id = IntegerField(primary_key=True)
     user_id1 = IntegerField()

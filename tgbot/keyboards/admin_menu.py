@@ -3,6 +3,7 @@ import datetime
 from aiogram.utils.keyboard import ReplyKeyboardMarkup, InlineKeyboardMarkup, InlineKeyboardButton, KeyboardButton
 
 
+# Return markup with cancel button
 def cancel(text: str = '🚫 Отмена', and_replied: bool = False) -> InlineKeyboardMarkup:
     data = 'close'
     if and_replied:
@@ -15,6 +16,7 @@ def cancel(text: str = '🚫 Отмена', and_replied: bool = False) -> Inline
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup with close button
 def close(text: str = '✖ Закрыть', and_replied: bool = False) -> InlineKeyboardMarkup:
     data = 'close'
     if and_replied:
@@ -27,21 +29,24 @@ def close(text: str = '✖ Закрыть', and_replied: bool = False) -> Inline
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup with main admin menu
 def main() -> InlineKeyboardMarkup:
     markup = [
         [
-            InlineKeyboardButton(text='📫 Рассылки', callback_data='mailing_center')
+            InlineKeyboardButton(text='📫 Рассылки', callback_data='mailing_center'),
+            InlineKeyboardButton(text='👨‍❤️‍👨 Админ состав', callback_data='admins')
         ],
         [
             InlineKeyboardButton(text='📑 Резервное копирование', callback_data='reserve_copies')
         ],
         [
-            InlineKeyboardButton(text='👨‍❤️‍👨 Админ состав', callback_data='admins')
+            InlineKeyboardButton(text='✖ Закрыть', callback_data='close')
         ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that manages mailings
 def mailing_center(planned_count: int) -> InlineKeyboardMarkup:
     markup = [
         [
@@ -52,11 +57,15 @@ def mailing_center(planned_count: int) -> InlineKeyboardMarkup:
         ],
         [
             InlineKeyboardButton(text='🔗 Добавить url-кнопку', callback_data='add_url_button')
+        ],
+        [
+            InlineKeyboardButton(text='✖ Закрыть', callback_data='close')
         ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that can add close button to message
 def ask_button() -> InlineKeyboardMarkup:
     markup = [
         [
@@ -70,6 +79,7 @@ def ask_button() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that contains mailing types
 def mailing_types() -> InlineKeyboardMarkup:
     markup = [
         [
@@ -83,6 +93,7 @@ def mailing_types() -> InlineKeyboardMarkup:
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return updated markup
 def updated(markup: InlineKeyboardMarkup, button: InlineKeyboardButton, new_row: bool = True) -> InlineKeyboardMarkup:
     if markup is None:
         markup = []
@@ -98,6 +109,7 @@ def updated(markup: InlineKeyboardMarkup, button: InlineKeyboardButton, new_row:
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that contains choice of button place
 def button_place():
     markup = [
         [
@@ -111,6 +123,7 @@ def button_place():
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that contains planned mailings
 def planned_mails(mails: list[str, datetime.datetime]):
     markup = [
         [
@@ -131,6 +144,7 @@ def planned_mails(mails: list[str, datetime.datetime]):
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that suggests cancel planned mailing
 def planned_mail(mail_id):
     markup = [
         [
@@ -141,6 +155,7 @@ def planned_mail(mail_id):
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that allows to manage reserve copies
 def reserve_copies(database_selected):
     database_row = [InlineKeyboardButton(text='База данных', callback_data='download_database')]
     for i in [0.5, 1, 1.5]:
@@ -157,11 +172,15 @@ def reserve_copies(database_selected):
             InlineKeyboardButton(text='Пауза', callback_data='none'),
             InlineKeyboardButton(text='\t', callback_data='none'),
         ],
-        database_row
+        database_row,
+        [
+            InlineKeyboardButton(text='✖ Закрыть', callback_data='close')
+        ]
     ]
     return InlineKeyboardMarkup(inline_keyboard=markup)
 
 
+# Return markup that contains button for manage admin list
 def admins(admin_list: list[tuple[int, str]]):
     markup = [
         *[[
@@ -170,7 +189,7 @@ def admins(admin_list: list[tuple[int, str]]):
             InlineKeyboardButton(text='🗑', callback_data=f'delete_admin_{i[0]}')
         ] for i in admin_list],
         [
-            InlineKeyboardButton(text='➕', callback_data='add_admin')
+            InlineKeyboardButton(text='➕ Добавить админа', callback_data='add_admin')
         ],
         [
             InlineKeyboardButton(text='✖ Закрыть', callback_data='close')

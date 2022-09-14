@@ -7,6 +7,7 @@ from tgbot.services.api_database import User
 router = user_router
 
 
+# Action on command "/start"
 async def start_handler(msg: types.Message, state: FSMContext, user: User):
     await state.clear()
 
@@ -17,6 +18,7 @@ async def start_handler(msg: types.Message, state: FSMContext, user: User):
     await msg.answer(text=text)
 
 
+# Action on command "/start"
 @router.message(commands='start', state='*')
 async def start(msg: types.Message, state: FSMContext, user: User):
     await start_handler(msg, state, user)

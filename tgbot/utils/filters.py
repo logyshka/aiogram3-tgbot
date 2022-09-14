@@ -3,6 +3,7 @@ from aiogram import types
 from aiogram.filters import BaseFilter
 
 
+# Check, if user is admin.
 class IsAdmin(BaseFilter):
     admins: list[int]
 

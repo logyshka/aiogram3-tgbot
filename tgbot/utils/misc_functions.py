@@ -1,14 +1,9 @@
-import typing
-from zipfile import ZipFile
-from io import BytesIO
 from os import listdir, remove, rmdir
 from os.path import isdir, isfile
+from zipfile import ZipFile
 
 
-# Добавляет файл/папку в архив
-from aiogram import types
-
-
+# Add file or directory to the archive
 def add_to_archive(archive: ZipFile, path: str, arcname: str) -> ZipFile:
     if isfile(path):
         archive.write(path, arcname)
@@ -18,7 +13,7 @@ def add_to_archive(archive: ZipFile, path: str, arcname: str) -> ZipFile:
     return archive
 
 
-# Создаёт архив из папки
+# Create archive from choosen directory
 def create_archive_from_dir(src: str, comment: str = '', need_delete: bool = True) -> bytes:
     dst = src + '.zip'
     archive = ZipFile(file=dst, mode='a')
@@ -35,7 +30,7 @@ def create_archive_from_dir(src: str, comment: str = '', need_delete: bool = Tru
     return byte_data
 
 
-# Удаляет файл/папку не вызывая исключений
+# Delete file/directory and ignore errors
 def sdelete(path: str):
     if isfile(path):
         try:
